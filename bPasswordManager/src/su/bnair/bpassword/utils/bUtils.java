@@ -16,8 +16,8 @@ import org.yaml.snakeyaml.Yaml;
 import su.bnair.bpassword.Instances;
 
 public class bUtils {
-	public static void createOfUpdateConfig() {
-		Map<String, Object> data = new HashMap<>();
+    public static void createOfUpdateConfig() {
+        Map<String, Object> data = new HashMap<>();
         data.put("DATABASE_URL", "jdbc:mysql://IP:PORT/DATABASE_NAME?serverTimezone=UTC");
         data.put("USERNAME", "USERNAME");
         data.put("PASSWORD", "PASSWORD");
@@ -32,28 +32,30 @@ public class bUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
-	
-	public static void readConfig() throws IOException {
-		File file = new File("config.yaml");
-		if(file.exists()) {
-			try (FileInputStream input = new FileInputStream("config.yaml")) {
-	            Yaml yaml = new Yaml();
-	            Map<String, Object> data = yaml.load(input);
-	            Instances.DATABASE_URL = (String)data.get("DATABASE_URL");
-	            Instances.USERNAME = (String)data.get("USERNAME");
-	            Instances.PASSWORD = (String)data.get("PASSWORD");
-	            if(((String)data.get("USERNAME")).equalsIgnoreCase("USERNAME") || ((String)data.get("USERNAME")).equalsIgnoreCase("PASSWORD")) {
-	            	JOptionPane.showMessageDialog(null,"Veuillez remplir le fichier de configuration pour continuer ! (config.yaml)", "Attention", JOptionPane.WARNING_MESSAGE);
-	    			System.exit(0);
-	            }
-	        } catch (FileNotFoundException e) {
-	            e.printStackTrace();
-	        }
-		} else {
-			createOfUpdateConfig();
-			JOptionPane.showMessageDialog(null,"Fichier de configuration créer, veuillez donc le remplir (config.yaml)");
-			System.exit(0);
-		}
-	}
+    }
+
+    public static void readConfig() throws IOException {
+        File file = new File("config.yaml");
+        if (file.exists()) {
+            try (FileInputStream input = new FileInputStream("config.yaml")) {
+                Yaml yaml = new Yaml();
+                Map<String, Object> data = yaml.load(input);
+                Instances.DATABASE_URL = (String) data.get("DATABASE_URL");
+                Instances.USERNAME = (String) data.get("USERNAME");
+                Instances.PASSWORD = (String) data.get("PASSWORD");
+                if (((String) data.get("USERNAME")).equalsIgnoreCase("USERNAME") || ((String) data.get("USERNAME")).equalsIgnoreCase("PASSWORD")) {
+                    Instances.open(Instances.getSignup());
+                    Instances.hide(Instances.getLogin());
+                } else {
+                    Instances.open(Instances.getLogin());
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            createOfUpdateConfig();
+            JOptionPane.showMessageDialog(null, "Fichier de configuration créer, veuillez donc le remplir (config.yaml)");
+            System.exit(0);
+        }
+    }
 }

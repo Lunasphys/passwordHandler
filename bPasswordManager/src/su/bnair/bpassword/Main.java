@@ -11,7 +11,7 @@ public class Main {
 			bUtils.readConfig();
 			DatabaseUtils.createInformationTable();
 			DatabaseUtils.getEveryStoredInformations();
-			Instances.open(Instances.getMainFrame());
+//			Instances.open(Instances.getLogin());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

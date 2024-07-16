@@ -1,5 +1,6 @@
 package su.bnair.bpassword.ui;
 
+import org.yaml.snakeyaml.Yaml;
 import su.bnair.bpassword.Instances;
 import su.bnair.bpassword.models.StoredInformation;
 import su.bnair.bpassword.ui.models.NamedJFrame;
@@ -10,9 +11,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Map;
 
 public class StoredInformationPopup extends NamedJFrame {
 
@@ -108,13 +113,33 @@ public class StoredInformationPopup extends NamedJFrame {
 		contentPane.add(openButton);
 		
 		revealButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(passwordTextfield.getEchoChar() == '*') {
-					passwordTextfield.setEchoChar('\0');
-				} else {
-					passwordTextfield.setEchoChar('*');
-				}
-			}
-		});
+    public void actionPerformed(ActionEvent e) {
+        try {
+            File file = new File("config.yaml");
+            Yaml yaml = new Yaml();
+
+            try (InputStream input = new FileInputStream(file)) {
+                Map<String, Object> data = yaml.load(input);
+
+                String configPassword = (String) data.get("PASSWORD");
+                String enteredPassword = JOptionPane.showInputDialog(null, "Veuillez entrer le mot de passe:");
+
+                // Vérifier la correspondance du mot de passe
+                if (enteredPassword.equals(configPassword)) {
+                    if (passwordTextfield.getEchoChar() == '*') {
+                        passwordTextfield.setEchoChar('\0');
+                    } else {
+                        passwordTextfield.setEchoChar('*');
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Mot de passe incorrect. Veuillez réessayer.");
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+});
+
 	}
 }

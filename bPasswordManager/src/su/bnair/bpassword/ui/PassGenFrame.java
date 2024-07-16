@@ -38,7 +38,7 @@ public class PassGenFrame extends NamedJFrame {
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		textField.setEditable(false);
-		textField.setBounds(6, 184, 414, 20);
+		textField.setBounds(6, 204, 414, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -86,25 +86,8 @@ public class PassGenFrame extends NamedJFrame {
 			}
 		});
 
-		generateButton.setBounds(6, 152, 414, 23);
+		generateButton.setBounds(6, 160, 414, 23);
 		contentPane.add(generateButton);
-
-		JProgressBar strongPassword = new JProgressBar(0, 100);
-		int x1 = this.getWidth()/2;
-		int x2 = this.getWidth()/4;
-		strongPassword.setBounds(x2,215,x1,15);
-		contentPane.add(strongPassword);
-		strongPassword.setStringPainted(true);
-		if (useCaps.isSelected() && useNumbers.isSelected() && useSpecialCaracters.isSelected() && slider.getValue() >= 16) {
-			strongPassword.setValue(100);
-			strongPassword.setIndeterminate(false);
-		} else if (!useCaps.isSelected() || !useNumbers.isSelected() || useSpecialCaracters.isSelected() && slider.getValue() >= 8) {
-			strongPassword.setValue(50);
-			strongPassword.setIndeterminate(false);
-		} else {
-			strongPassword.setValue(0);
-			strongPassword.setIndeterminate(true);
-		}
 		
 		JButton backButton = new JButton("Retour");
 		backButton.addActionListener(new ActionListener() {

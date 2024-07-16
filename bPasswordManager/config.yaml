@@ -1,5 +1,2 @@
-{
-  DATABASE_URL: 'jdbc:mysql://IP:PORT/DATABASE_NAME?serverTimezone=UTC',
-  PASSWORD: PASSWORD,
-  USERNAME: USERNAME
-}
+{DATABASE_URL: 'jdbc:mysql://IP:PORT/DATABASE_NAME?serverTimezone=UTC', PASSWORD: admin,
+  USERNAME: admin}
